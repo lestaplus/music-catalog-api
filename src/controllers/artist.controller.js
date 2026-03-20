@@ -30,3 +30,21 @@ export const createArtist = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const deleteArtist = async (req, res) => {
+  try {
+    const artistId = parseInt(req.params.id);
+
+    await prisma.artist.delete({
+      where: { artist_id: artistId },
+    });
+
+    res.status(200).json({ message: "Artist deleted" });
+  } catch (error) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "No artist found with this ID" });
+    }
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
