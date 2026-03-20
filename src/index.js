@@ -1,13 +1,12 @@
 import express from "express";
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import artistRoutes from "./routes/artist.routes.js";
 
-const prisma = new PrismaClient();
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use("/api/artists", artistRoutes);
 
 app.get("/", (req, res) => {
   res.send("Ok");
