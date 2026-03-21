@@ -3,10 +3,11 @@ import {
   createArtist,
   deleteArtist,
 } from "../controllers/artist.controller.js";
+import { authenticateToken } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/", createArtist);
-router.delete("/:id", deleteArtist);
+router.post("/", authenticateToken, createArtist);
+router.delete("/:id", authenticateToken, deleteArtist);
 
 export default router;
