@@ -1,11 +1,11 @@
 import prisma from "../db.js";
+import { isValidFoundedYear } from "../utils/validators.js";
 
 export const createArtist = async (req, res) => {
   try {
     const { name, genre, founded_year } = req.body;
 
-    const currentYear = new Date().getFullYear();
-    if (founded_year && founded_year > currentYear) {
+    if (!isValidFoundedYear(founded_year)) {
       return res
         .status(400)
         .json({ error: "The founding year cannot be in the future" });

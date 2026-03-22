@@ -1,10 +1,11 @@
 import prisma from "../db.js";
+import { isValidTrackDuration } from "../utils/validators.js";
 
 export const createTrack = async (req, res) => {
   try {
     const { title, duration, artistId } = req.body;
 
-    if (!duration || duration <= 0) {
+    if (!isValidTrackDuration(duration)) {
       return res
         .status(400)
         .json({ error: "Track duration must be greater than 0" });
