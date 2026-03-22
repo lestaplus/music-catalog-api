@@ -1,6 +1,6 @@
 export const isValidFoundedYear = (year) => {
   if (year == null) return false;
-  const currentYear = newDate().getFullYear();
+  const currentYear = new Date().getFullYear();
   return year <= currentYear;
 };
 
