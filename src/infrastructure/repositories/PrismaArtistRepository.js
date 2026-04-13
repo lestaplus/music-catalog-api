@@ -11,6 +11,14 @@ export class PrismaArtistRepository extends IArtistRepository {
     return ArtistMapper.toDomain(prismaArtist);
   }
 
+  async findById(id) {
+    const prismaArtist = await prisma.artist.findUnique({
+      where: { id: Number(id) },
+    });
+
+    return ArtistMapper.toDomain(prismaArtist);
+  }
+
   async save(artist) {
     const data = ArtistMapper.toPersistence(artist);
 
