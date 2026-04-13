@@ -7,17 +7,21 @@ export class ArtistFactory {
   }
 
   async create({ name, genre, foundedYear }) {
-    const existingArtist = await this.artistRepository.findByName(name);
-
-    if (existingArtist) {
-      throw new DomainError(`Artist with name ${name} already exists`);
-    }
-
-    return new Artist({
+    const newArtist = new Artist({
       id: null,
       name,
       genre,
       foundedYear,
     });
+
+    const existingArtist = await this.artistRepository.findByName(
+      newArtist.name,
+    );
+
+    if (existingArtist) {
+      throw new DomainError(`Artist with name ${name} already exists`);
+    }
+
+    return newArtist;
   }
 }

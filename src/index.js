@@ -1,5 +1,5 @@
 import express from "express";
-import artistRoutes from "./routes/artist.routes.js";
+import artistRoutes from "./presentation/routes/ArtistRoutes.js";
 import trackRoutes from "./routes/track.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 
