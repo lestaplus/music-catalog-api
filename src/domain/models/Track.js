@@ -21,7 +21,7 @@ export class Track {
 
     if (this.duration !== undefined && this.duration !== null) {
       const durationNum = Number(this.duration);
-      if (isNaN(durationNum)) {
+      if (typeof this.duration !== "number") {
         throw new DomainError("Track duration must be a number");
       }
       if (durationNum <= 0) {
@@ -29,8 +29,8 @@ export class Track {
       }
     }
 
-    if (!this.artistId) {
-      throw new DomainError("Track must belong to the artist");
+    if (!this.artistId || typeof this.artistId !== "number") {
+      throw new DomainError("Track must belong to the artist (number)");
     }
   }
 }

@@ -1,6 +1,6 @@
 import express from "express";
 import artistRoutes from "./presentation/routes/ArtistRoutes.js";
-import trackRoutes from "./routes/track.routes.js";
+import trackRoutes from "./presentation/routes/TrackRoutes.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
