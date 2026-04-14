@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { User } from "../models/User.js";
 import { DomainError } from "../errors/DomainError.js";
 
@@ -12,18 +12,22 @@ export class UserFactory {
       throw new DomainError("User password must contain at least 8 characters");
     }
 
-    const existingUser = await this.userRepository.findByEmail(email);
+    const newUser = new User({
+      id: null,
+      email,
+      password,
+    });
+
+    const existingUser = await this.userRepository.findByEmail(newUser.email);
     if (existingUser) {
-      throw new DomainError(`User with email ${email} already exists`);
+      throw new DomainError(`User with email ${newUser.email} already exists`);
     }
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    return new User({
-      id: null,
-      email,
-      password: hashedPassword,
-    });
+    newUser.password = hashedPassword;
+
+    return newUser;
   }
 }
