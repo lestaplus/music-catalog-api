@@ -10,4 +10,10 @@ export class PrismaTrackRepository extends ITrackRepository {
 
     return TrackMapper.toDomain(savedPrismaTrack);
   }
+
+  async findAll() {
+    const prismaTracks = await prisma.track.findMany();
+
+    return prismaTracks.map((track) => TrackMapper.toDomain(track));
+  }
 }
