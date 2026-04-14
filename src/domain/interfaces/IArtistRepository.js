@@ -10,4 +10,8 @@ export class IArtistRepository {
   async save(artist) {
     throw new Error("save method must be implemented");
   }
+
+  async deleteById(id) {
+    throw new Error("deleteById method must be implemented");
+  }
 }

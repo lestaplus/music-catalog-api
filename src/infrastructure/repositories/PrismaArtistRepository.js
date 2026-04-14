@@ -26,4 +26,10 @@ export class PrismaArtistRepository extends IArtistRepository {
 
     return ArtistMapper.toDomain(savedPrismaArtist);
   }
+
+  async deleteById(id) {
+    await prisma.artist.delete({
+      where: { artist_id: Number(id) },
+    });
+  }
 }
