@@ -5,7 +5,7 @@ export class ArtistMapper {
     if (!prismaArtist) return null;
 
     return new Artist({
-      id: prismaArtist.id,
+      id: prismaArtist.artist_id,
       name: prismaArtist.name,
       genre: prismaArtist.genre,
       foundedYear: prismaArtist.founded_year,

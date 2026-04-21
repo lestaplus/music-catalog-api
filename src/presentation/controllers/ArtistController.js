@@ -1,18 +1,24 @@
+import { CreateArtistCommand } from "../../application/commands/CreateArtistCommand.js";
+import { DeleteArtistCommand } from "../../application/commands/DeleteArtistCommand.js";
 import { DomainError } from "../../domain/errors/DomainError.js";
 
 export class ArtistController {
-  constructor(createArtistUseCase, deleteArtistUseCase) {
-    this.createArtistUseCase = createArtistUseCase;
-    this.deleteArtistUseCase = deleteArtistUseCase;
+  constructor(createArtistCommandHandler, deleteArtistCommandHandler) {
+    this.createArtistCommandHandler = createArtistCommandHandler;
+    this.deleteArtistCommandHandler = deleteArtistCommandHandler;
   }
 
   createArtist = async (req, res) => {
     try {
-      const dto = req.body;
+      const command = new CreateArtistCommand({
+        name: req.body.name,
+        genre: req.body.genre,
+        foundedYear: req.body.foundedYear,
+      });
 
-      const artist = await this.createArtistUseCase.execute(dto);
+      const result = await this.createArtistCommandHandler.execute(command);
 
-      return res.status(201).json(artist);
+      return res.status(201).json(result);
     } catch (error) {
       if (error instanceof DomainError) {
         return res.status(400).json({ error: error.message });
@@ -25,10 +31,10 @@ export class ArtistController {
 
   deleteArtist = async (req, res) => {
     try {
-      const { id } = req.params;
+      const command = new DeleteArtistCommand(req.params.id);
 
-      const result = await this.deleteArtistUseCase.execute(id);
-      return res.status(200).json(result);
+      await this.deleteArtistCommandHandler.execute(command);
+      return res.status(200).json({ message: "Artist has been removed" });
     } catch (error) {
       if (error instanceof DomainError) {
         return res.status(404).json({ error: error.message });
