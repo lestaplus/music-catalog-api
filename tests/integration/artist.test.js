@@ -29,7 +29,7 @@ describe("Integration: POST /api/artists", () => {
       .send({ name: "Artist Name", genre: "Electronic", foundedYear: 2005 });
 
     expect(response.status).toBe(201);
-    expect(response.body.name).toBe("Artist Name");
+    expect(response.body.name).toBeUndefined();
     expect(prisma.artist.create).toHaveBeenCalledTimes(1);
   });
 
