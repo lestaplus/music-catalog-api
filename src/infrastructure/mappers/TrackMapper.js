@@ -6,7 +6,7 @@ export class TrackMapper {
     if (!prismaTrack) return null;
 
     return new Track({
-      id: prismaTrack.id,
+      id: prismaTrack.track_id,
       title: prismaTrack.title,
       duration: prismaTrack.duration,
       artistId: prismaTrack.artist_id,
