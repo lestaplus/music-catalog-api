@@ -1,13 +1,13 @@
-export class RegisterUserUseCase {
+export class RegisterUserCommandHandler {
   constructor(userFactory, userRepository) {
     this.userFactory = userFactory;
     this.userRepository = userRepository;
   }
 
-  async execute(dto) {
+  async execute(command) {
     const user = await this.userFactory.create({
-      email: dto.email,
-      password: dto.password,
+      email: command.email,
+      password: command.password,
     });
 
     const savedUser = await this.userRepository.save(user);

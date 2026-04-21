@@ -1,19 +1,18 @@
+import { RegisterUserCommand } from "../../application/commands/RegisterUserCommand.js";
+import { LoginUserQuery } from "../../application/queries/LoginUserQuery.js";
 import { DomainError } from "../../domain/errors/DomainError.js";
 
 export class AuthController {
-  constructor(registerUserUseCase, loginUserUseCase) {
-    this.registerUserUseCase = registerUserUseCase;
-    this.loginUserUseCase = loginUserUseCase;
+  constructor(registerUserCommandHandler, loginUserQueryHandler) {
+    this.registerUserCommandHandler = registerUserCommandHandler;
+    this.loginUserQueryHandler = loginUserQueryHandler;
   }
 
   register = async (req, res) => {
     try {
-      const dto = {
-        email: req.body.email,
-        password: req.body.password,
-      };
+      const command = new RegisterUserCommand(req.body);
 
-      const result = await this.registerUserUseCase.execute(dto);
+      const result = await this.registerUserCommandHandler.execute(command);
 
       return res.status(201).json(result);
     } catch (error) {
@@ -28,12 +27,9 @@ export class AuthController {
 
   login = async (req, res) => {
     try {
-      const dto = {
-        email: req.body.email,
-        password: req.body.password,
-      };
+      const query = new LoginUserQuery(req.body);
 
-      const result = await this.loginUserUseCase.execute(dto);
+      const result = await this.loginUserQueryHandler.execute(query);
 
       return res.status(200).json(result);
     } catch (error) {
