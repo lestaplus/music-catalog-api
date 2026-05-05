@@ -1,8 +1,10 @@
+import { UserRegisteredEvent } from "../../domain/events/UserRegisteredEvent.js";
+
 export class RegisterUserCommandHandler {
-  constructor(userFactory, userRepository, notificationService) {
+  constructor(userFactory, userRepository, eventBus) {
     this.userFactory = userFactory;
     this.userRepository = userRepository;
-    this.notificationService = notificationService;
+    this.eventBus = eventBus;
   }
 
   async execute(command) {
@@ -13,14 +15,11 @@ export class RegisterUserCommandHandler {
 
     const savedUser = await this.userRepository.save(user);
 
-    try {
-      await this.notificationService.sendWelcomeEmail(
-        savedUser.email,
-        savedUser.id,
-      );
-    } catch (error) {
-      console.error("Error sending welcome email:", error.message);
-    }
+    const event = new UserRegisteredEvent({
+      userId: savedUser.id,
+      email: savedUser.email,
+    });
+    this.eventBus.publish(event);
 
     return {
       id: savedUser.id,
