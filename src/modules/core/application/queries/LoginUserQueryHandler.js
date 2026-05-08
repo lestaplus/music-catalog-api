@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import prisma from "../../db.js";
+import prisma from "../../../../db.js";
 import { DomainError } from "../../domain/errors/DomainError.js";
 
 export class LoginUserQueryHandler {

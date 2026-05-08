@@ -1,14 +1,28 @@
 import express from "express";
-import artistRoutes from "./presentation/routes/ArtistRoutes.js";
-import trackRoutes from "./presentation/routes/TrackRoutes.js";
-import authRoutes from "./presentation/routes/AuthRoutes.js";
+import { EventBus } from "./infrastructure/events/EventBus.js";
+
+import { authRoutes, artistRoutes, trackRoutes } from "./modules/core/api.js";
+import { OnUserRegisteredHandler } from "./modules/analytics/application/OnUserRegisteredHandler.js";
+import { NotificationService } from "./modules/core/infrastructure/services/NotificationService.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
+const eventBus = new EventBus();
+const notificationService = new NotificationService();
+const analyticsHandler = new OnUserRegisteredHandler();
+
+eventBus.subscribe("UserRegisteredEvent", async (event) => {
+  await notificationService.sendWelcomeEmail(event.email, event.userId);
+});
+
+eventBus.subscribe("UserRegisteredEvent", async (event) => {
+  await analyticsHandler.handle(event);
+});
+
+app.use("/api/auth", authRoutes(eventBus));
 app.use("/api/artists", artistRoutes);
 app.use("/api/tracks", trackRoutes);
 

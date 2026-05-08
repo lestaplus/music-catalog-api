@@ -1,5 +1,5 @@
-import { User } from "../../src/domain/models/User.js";
-import { DomainError } from "../../src/domain/errors/DomainError.js";
+import { User } from "../../src/modules/core/domain/models/User.js";
+import { DomainError } from "../../src/modules/core/domain/errors/DomainError.js";
 
 describe("Domain: User Model", () => {
   test("Should be successfully created with valid data", () => {

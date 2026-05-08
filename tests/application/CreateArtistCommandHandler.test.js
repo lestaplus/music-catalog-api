@@ -1,5 +1,5 @@
-import { CreateArtistCommand } from "../../src/application/commands/CreateArtistCommand.js";
-import { CreateArtistCommandHandler } from "../../src/application/commands/CreateArtistCommandHandler.js";
+import { CreateArtistCommand } from "../../src/modules/core/application/commands/CreateArtistCommand.js";
+import { CreateArtistCommandHandler } from "../../src/modules/core/application/commands/CreateArtistCommandHandler.js";
 import { jest } from "@jest/globals";
 
 describe("Unit: CreateArtistCommandHandler", () => {

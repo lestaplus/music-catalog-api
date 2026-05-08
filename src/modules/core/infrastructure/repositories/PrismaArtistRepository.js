@@ -1,6 +1,6 @@
 import { IArtistRepository } from "../../domain/interfaces/IArtistRepository.js";
 import { ArtistMapper } from "../mappers/ArtistMapper.js";
-import prisma from "../../db.js";
+import prisma from "../../../../db.js";
 
 export class PrismaArtistRepository extends IArtistRepository {
   async findByName(name) {

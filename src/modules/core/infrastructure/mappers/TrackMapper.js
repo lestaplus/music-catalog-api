@@ -1,4 +1,4 @@
-import prisma from "../../db.js";
+import prisma from "../../../../db.js";
 import { Track } from "../../domain/models/Track.js";
 
 export class TrackMapper {

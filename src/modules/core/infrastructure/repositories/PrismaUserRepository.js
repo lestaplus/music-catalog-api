@@ -1,6 +1,6 @@
 import { IUserRepository } from "../../domain/interfaces/IUserRepository.js";
 import { UserMapper } from "../mappers/UserMapper.js";
-import prisma from "../../db.js";
+import prisma from "../../../../db.js";
 
 export class PrismaUserRepository extends IUserRepository {
   async findByEmail(email) {
